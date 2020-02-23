@@ -41,7 +41,8 @@ export class PostsService {
         this.url,
         {
           headers: new HttpHeaders({'Custom-Header': 'Hello'}),
-          params: searchParams
+          params: searchParams,
+          responseType: 'json'
         }
       )
       .pipe(
@@ -65,7 +66,8 @@ export class PostsService {
     return this.http.delete(
       this.url,
       {
-        observe: 'events'
+        observe: 'events',
+        responseType: 'text'
       }
     ).pipe(tap(event => {
       console.log(event);
