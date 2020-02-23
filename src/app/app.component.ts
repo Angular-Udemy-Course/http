@@ -41,12 +41,17 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  onHandleError() {
+    this.error = null;
+  }
+
   private fetchPosts() {
     this.isFetching = true;
     this.postsService.fetchPosts().subscribe(posts => {
       this.isFetching = false;
       this.loadedPosts = posts;
     }, error => {
+      this.isFetching = false;
       this.error = error.message;
       console.log(error);
     });
