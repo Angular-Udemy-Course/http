@@ -11,23 +11,35 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchPosts();
+  }
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
-    this.http.post(
-      'https://ng-complete-guide-golkedj.firebaseio.com/posts.json',
-      postData
-    ).subscribe(responseData => {
-      console.log(responseData);
-    });
+    this.http
+      .post(
+        'https://ng-complete-guide-golkedj.firebaseio.com/posts.json',
+        postData
+      ).subscribe(responseData => {
+        console.log(responseData);
+      });
   }
 
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts();
   }
 
   onClearPosts() {
     // Send Http request
+  }
+
+  private fetchPosts() {
+    this.http
+      .get('https://ng-complete-guide-golkedj.firebaseio.com/posts.json')
+      .subscribe(posts => {
+        console.log(posts);
+      });
   }
 }
