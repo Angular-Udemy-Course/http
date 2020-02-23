@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
 import { Post } from './post.model';
+import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
   url: string = 'https://ng-complete-guide-golkedj.firebaseio.com/posts.json';
+  error = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +19,14 @@ export class PostsService {
         this.url,
         postData
       )
-      .subscribe(responseData => {
-        console.log(responseData);
-      });
+      .subscribe(
+        responseData => {
+          console.log(responseData);
+        },
+        error => {
+          this.error.next(error.message);
+        }
+      );
   }
 
   fetchPosts() {
